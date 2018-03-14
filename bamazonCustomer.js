@@ -28,7 +28,7 @@ connection.connect(function(err) {
 function start() {
 	connection.query("SELECT * FROM products", function(err, results) {
 		if (err) throw err;
-	console.log("table selected");
+//	console.log("table selected");
 	inquirer.prompt([
 		  {
 		  	name: "choice",
@@ -55,7 +55,12 @@ function start() {
             selectedItem = results[i];
         }
  			}
-			if (selectedItem.stock_quantity > parseInt(answer.amount)) {
+			if (selectedItem.stock_quantity < parseInt(answer.amount)) {
+				console.log("We don't have that many in stock. Order cancelled. Select a smaller quantity or another item.");
+				start();
+			}
+			else {
+
  				connection.query(
      				"UPDATE products SET ? WHERE ?",
       		[
@@ -68,15 +73,30 @@ function start() {
               if (err) throw err;
               updatedStockQuantity = (answer.stock_quantity - answer.amount);
      	 		customerTotal = selectedItem.price * parseInt(answer.amount);
-					console.log("Your Item is in stock! Your total is $" + customerTotal);
-           }
- 					);
-				}
-				else {
-      		console.log("We don't have that many in stock. Order cancelled. Select a smaller quantity or another item.");
-      		start();
-				}		
+					console.log("Your Item is in stock! Your total is $" + customerTotal + ".");
+					inquirer
+    				.prompt({
+     						name: "anotherPurchase",
+      					type: "rawlist",
+      					message: "Would you like to make another purchase?",
+      					choices: ["YES", "NO"]
+    				})
+    					.then(function(answer) {
+      					if (answer.anotherPurchase.toUpperCase() === "YES") {
+        				start();
+      					}
+      					else {
+      					console.log("Thank you for shopping with Bamazon!")
+      					}
+      					
+    					});
+    					}
+    					)
+						}
+           });
+				})
+						
 			
-	});
-});
-}
+	};
+
+
