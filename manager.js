@@ -50,12 +50,14 @@ function options() {
 function viewForSale() {
 	 connection.query("SELECT * FROM products", function(err, results) {
     if (err) throw err;
-    var productsArray = [];
-    for (var i = 0; i < results.length; i++) {
-     	productsArray.push(results[i].id + results[i].product_name + results[i].department_name + results[i].price + results[i].stock_quantity);
-     }
-      return productsArray;
-      console.log("Here are the products currently for sale.");
+    //var productsArray = [];
+    //for (var i = 0; i < results.length; i++) {
+    // 	productsArray.push(results[i].id + results[i].product_name + results[i].department_name + results[i].price + results[i].stock_quantity);
+     //}
+      //return productsArray;
+      //console.log("Here are the products currently for sale.");
+      console.log("Product: " + results[i].product_name + " " + "Department: " + results[i].department_name + " " + "$" + results[i].price + " " + "In stock: " + results[i].stock_quantity)
+      }
       options();
     });
       
