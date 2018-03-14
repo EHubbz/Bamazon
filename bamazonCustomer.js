@@ -25,7 +25,7 @@ connection.connect(function(err) {
   start();
 });
 
-function start() {
+function start() { //displays table and prompts customer
 	connection.query("SELECT * FROM products", function(err, results) {
 		if (err) throw err;
 //	console.log("table selected");
