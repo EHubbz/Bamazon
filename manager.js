@@ -23,7 +23,7 @@ connection.connect(function(err) {
 //run the start function after the connection is made to begin
   options();
 });
-
+//lists options for the user to select from
 function options() {
 	inquirer.prompt({
 		  	name: "option",
@@ -44,34 +44,18 @@ function options() {
       else if (answer.option.toUpperCase() === "ADD_PRODUCT") {
         addProduct();
       }
-    });
+  });
 }
-
+//shows the user the current items for sale
 function viewForSale() {
 	 connection.query("SELECT * FROM products", function(err, results) {
-    if (err) throw err;
-    //var productsArray = [];
-   
-    // 	productsArray.push(results[i].id + results[i].product_name + results[i].department_name + results[i].price + results[i].stock_quantity);
-     //}
-      //return productsArray;
-      //console.log("Here are the products currently for sale.");
       for (var i = 0; i < results.length; i++) {
         console.log("Product: " + results[i].product_name + " " + "Department: " + results[i].department_name + " " + "$" + results[i].price + " " + "In stock: " + results[i].stock_quantity);
-      }
-      setTimeout(function(){
-        options();
-      }, 1500)
+       }
+       options();
     })
-      
 };
-      
-
-
-//function viewLowInv() {
-
-//};
-
+//allows user to update the inventory a current item
 function updateInv() {
 	inquirer
 	.prompt([
@@ -105,7 +89,7 @@ function updateInv() {
   	);
 	});
 }
-
+//allows user to add a new product to the inventory
 function addProduct() {
 	inquirer
     .prompt([

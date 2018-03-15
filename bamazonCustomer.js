@@ -28,7 +28,6 @@ connection.connect(function(err) {
 function start() { //displays table and prompts customer
 	connection.query("SELECT * FROM products", function(err, results) {
 		if (err) throw err;
-//	console.log("table selected");
 	inquirer.prompt([
 		  {
 		  	name: "choice",
@@ -43,7 +42,7 @@ function start() { //displays table and prompts customer
 		  	message: "Welcome to Bamazon! What item do you want to purchase? (Type the number to the left of the item to select it.)"
 		  },
 		  {
- 				name: "amount",
+ 			name: "amount",
 		  	type: "input",
 		  	message: "How many of this item would you like to purchase?"  
 			}
@@ -60,16 +59,17 @@ function start() { //displays table and prompts customer
 				start();
 			}
 			else {
-
- 				connection.query(
-     				"UPDATE products SET stock_quantity = ? WHERE id = ?",
+				//updates the database to reflect the new quantity in stock
+				connection.query(
+     			"UPDATE products SET stock_quantity = ? WHERE id = ?",
       		[
       			selectedItem.stock_quantity - answer.amount, selectedItem.id
 
-					],
+				],
 					function(err) {
               if (err) throw err;
      	 		customerTotal = selectedItem.price * parseInt(answer.amount);
+     	 		//gives customer their total and asks if they want to make another purchase
 					console.log("Your Item is in stock! Your total is $" + customerTotal + ".");
 					inquirer
     				.prompt({
@@ -78,6 +78,7 @@ function start() { //displays table and prompts customer
       					message: "Would you like to make another purchase?",
       					choices: ["YES", "NO"]
     				})
+    				//if yes, the app starts over
     					.then(function(answer) {
       					if (answer.anotherPurchase.toUpperCase() === "YES") {
         				start();
@@ -87,13 +88,11 @@ function start() { //displays table and prompts customer
       					}
       					
     					});
-    					}
-    					)
-						}
-           });
-				})
-						
-			
-	};
+    			}
+    		)
+			}
+    });
+	})
+};
 
 
