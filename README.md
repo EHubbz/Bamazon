@@ -53,3 +53,6 @@ Behind the scenes:
 --Another query is made to the database to find the appropriate columns in the able and add the corresponding information to the table based on the user's input during the inquirer.prompt. 
 --Once the database is update, the user is notified that the product was successfully added and the 'options' function is called again to reveal the list of task options. 
 
+##Items I could add in the future:
+--Log-in to determine if customer or user
+--Display the items when the manager is asked what items they want to update to they choose the id instead of typing out the whole product name or copying and pasting from the view list. 
