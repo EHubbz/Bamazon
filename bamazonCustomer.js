@@ -62,16 +62,13 @@ function start() { //displays table and prompts customer
 			else {
 
  				connection.query(
-     				"UPDATE products SET ? WHERE ?",
+     				"UPDATE products SET stock_quantity = ? WHERE id = ?",
       		[
-      			{stock_quantity: updatedStockQuantity
-				 	},
-					 {id: answer.choice
-						}
+      			selectedItem.stock_quantity - answer.amount, selectedItem.id
+
 					],
 					function(err) {
               if (err) throw err;
-              updatedStockQuantity = (answer.stock_quantity - answer.amount);
      	 		customerTotal = selectedItem.price * parseInt(answer.amount);
 					console.log("Your Item is in stock! Your total is $" + customerTotal + ".");
 					inquirer
